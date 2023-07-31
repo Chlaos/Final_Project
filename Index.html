@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <style>
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Todo List Application</h1> 
+    <h3>The list</h3>
+    <form id="todoForm">
+        <input type="text" id="todoInput" placeholder="Enter a todo">
+        <button type="submit">Add Todo</button>
+    </form>
+    <ul id="todoList"></ul>
+
+    <script>
+        var todos = [];
+        var todoForm = document.getElementById('todoForm');
+        var todoList = document.getElementById('todoList');
+        var todoInput = document.getElementById('todoInput');
+
+        todoForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var todoText = todoInput.value;
+            todos.push({ text: todoText, complete: false });
+
+            todoInput.value = '';
+            updateTodoList();
+        });
+
+        function updateTodoList() {
+            todoList.innerHTML = '';
+
+            todos.forEach(function(todo, index) {
+                var todoItem = document.createElement('li');
+
+                if(todo.complete) {
+                    todoItem.classList.add('completed');
+                }
+
+                todoItem.textContent = todo.text;
+
+                var checkButton = document.createElement('button');
+                checkButton.textContent = 'Check';
+                checkButton.addEventListener('click', function() {
+                    todos[index].complete = !todos[index].complete;
+                    updateTodoList();
+                });
+                todoItem.appendChild(checkButton);
+
+                var deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', function() {
+                    todos.splice(index, 1);
+                    updateTodoList();
+                });
+                todoItem.appendChild(deleteButton);
+
+                todoList.appendChild(todoItem);
+            });
+        }
+    </script>
+</body>
+</html>
+
