@@ -6,65 +6,34 @@
         .completed {
             text-decoration: line-through;
         }
+        #todoList {
+            margin-top: 20px;
+            padding: 0;
+        }
+        #todoList li {
+            list-style-type: none;
+            margin-bottom: 10px;
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .checkButton, .deleteButton {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>My Todo List Application</h1> 
-    <h3>The list</h3>
+    <h1>My Todo List Application</h1>
+    <h2>Your Todos:</h2>
+
     <form id="todoForm">
         <input type="text" id="todoInput" placeholder="Enter a todo">
         <button type="submit">Add Todo</button>
     </form>
     <ul id="todoList"></ul>
 
-    <script>
-        var todos = [];
-        var todoForm = document.getElementById('todoForm');
-        var todoList = document.getElementById('todoList');
-        var todoInput = document.getElementById('todoInput');
-
-        todoForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var todoText = todoInput.value;
-            todos.push({ text: todoText, complete: false });
-
-            todoInput.value = '';
-            updateTodoList();
-        });
-
-        function updateTodoList() {
-            todoList.innerHTML = '';
-
-            todos.forEach(function(todo, index) {
-                var todoItem = document.createElement('li');
-
-                if(todo.complete) {
-                    todoItem.classList.add('completed');
-                }
-
-                todoItem.textContent = todo.text;
-
-                var checkButton = document.createElement('button');
-                checkButton.textContent = 'Check';
-                checkButton.addEventListener('click', function() {
-                    todos[index].complete = !todos[index].complete;
-                    updateTodoList();
-                });
-                todoItem.appendChild(checkButton);
-
-                var deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.addEventListener('click', function() {
-                    todos.splice(index, 1);
-                    updateTodoList();
-                });
-                todoItem.appendChild(deleteButton);
-
-                todoList.appendChild(todoItem);
-            });
-        }
-    </script>
+    <script src="todo.js"></script> 
 </body>
 </html>
+
 
